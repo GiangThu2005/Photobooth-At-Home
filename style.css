@@ -1,0 +1,93 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #fbeffe;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+video, canvas {
+  margin: 10px auto;
+  max-width: 100%;
+  border: 4px solid #2d2a2a;
+  border-radius: 10px;
+}
+
+video {
+  transform: scaleX(-1);
+}
+
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #7e62b3;
+  color: white;
+}
+
+button:hover {
+  background-color: #654b96;
+}
+
+.hidden {
+  display: none;
+}
+
+.controls {
+  margin: 1px 0;
+}
+
+select {
+  padding: 5px 5px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#countdownOverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 64px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px 10px black;
+  z-index: 10;
+}
+
+.preview-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.photo-preview {
+  width: 144px;
+  height: 108px;
+  border: 3px solid #999;
+  border-radius: 8px;
+  background: white;
+}

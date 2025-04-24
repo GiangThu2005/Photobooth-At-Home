@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Photobooth At Home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin-top: 20px;
+    }
+
+    .edit-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1280px;
+}
+
+    .side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: 240px;
+  overflow: visible;
+  flex-shrink: 0;
+  align-items: flex-start;
+  margin-left: 0;
+}
+
+    .frame-buttons,
+    .sticker-buttons {
+      display: grid;
+      gap: 10px;
+    }
+
+    .frame-buttons {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .sticker-buttons {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .side-panel button,
+.frame-buttons button,
+.sticker-buttons button {
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  min-width: 140px;
+  box-sizing: border-box;
+}
+
+    .side-panel button:hover {
+      background-color: #ddd;
+    }
+
+    canvas#editCanvas {
+  border: 4px solid #333;
+  border-radius: 10px;
+  background-color: white;
+  height: 90vh;
+  width: auto;
+  max-width: 700px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+  </style>
+</head>
+<body>
+  <h1>✨ Cùng chỉnh sửa Photobooth của bạn nhé ✨</h1>
+
+  <div class="edit-container">
+    <!-- Bên trái: chọn khung và sticker -->
+    <div class="side-panel">
+      <label><strong>Nền:</strong></label>
+      <div class="frame-buttons">
+        <button onclick="changeBackground('white')"> Trắng</button>
+        <button onclick="changeBackground('#000000')">Đen</button>
+        <button onclick="changeBackground('#FBF8CC')">Vàng</button>
+        <button onclick="changeBackground('#fec89a')">Cam</button>
+        <button onclick="changeBackground('#f08080')">Đỏ</button>
+        <button onclick="changeBackground('#ffc8dd')">Hồng</button>
+        <button onclick="changeBackground('#CFBAF0')">Tím</button>
+        <button onclick="changeBackground('#A3C4F3')">Xanh dương</button>
+        <button onclick="changeBackground('#ccd5ae')">Xanh lá cây</button>
+        <button onclick="changeFrame('blue plaid.png')">Kẻ sọc xanh</button>
+        <button onclick="changeFrame('pink plaid.png')">Kẻ sọc hồng</button>
+        <button onclick="changeFrame('orange plaid.png')">Kẻ sọc cam</button>
+      </div>
+
+      <label><strong>Sticker:</strong></label>
+      <div class="sticker-buttons">
+        <button onclick="addSticker('simple.png')">Đơn giản</button>
+        <button onclick="addSticker('happy birthday.png')">Happy Birthday</button>
+        <button onclick="addSticker('korean style.png')">Dễ thương </button>
+        <button onclick="addSticker('frog.png')">Ếch mê hoa</button>
+        <button onclick="addSticker('crocodile.png')">Cá sấu cute</button>
+        <button onclick="addSticker('VietNam.png')">Việt Nam</button>
+      </div>
+    </div>
+
+    <!-- Canvas chính -->
+    <canvas id="editCanvas" width="700" height="2000"></canvas>
+
+    <!-- Bên phải: hiệu ứng và tải ảnh -->
+    <div class="side-panel">
+      <button onclick="adjustBrightness(20)">Làm sáng 🌞</button>
+      <button onclick="applyGrayscale()">Trắng đen 🎞️</button>
+      <button onclick="downloadImage()">Tải ảnh 💾</button>
+    </div>
+  </div>
+
+  <script src="edit.js"></script>
+</body>
+</html>

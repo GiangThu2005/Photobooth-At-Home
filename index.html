@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PhotoBooth At Home</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>😎 Chào mừng đến với Photobooth At Home 😎</h1>
+  
+  <div class="main-container">
+    <div class="video-container">
+      <video id="video" autoplay></video>
+      <div id="countdownOverlay" class="hidden"></div>
+      <div class="controls">
+        <label for="countdown">Chọn thời gian đếm ngược:</label>
+        <select id="countdown">
+          <option value="3">3 giây</option>
+          <option value="5">5 giây</option>
+          <option value="10">10 giây</option>
+        </select>
+      </div>  
+      <button id="captureBtn">Bắt đầu chụp ảnh 📸</button>
+    </div>
+
+    <div class="preview-column">
+      <canvas class="photo-preview hidden" id="preview1"></canvas>
+      <canvas class="photo-preview hidden" id="preview2"></canvas>
+      <canvas class="photo-preview hidden" id="preview3"></canvas>
+    </div>
+  </div>
+
+  <button id="brightness" class="hidden">Làm sáng 🌞</button>
+  <button id="grayscale" class="hidden">Trắng đen 🎞️</button>
+  <button id="downloadBtn" class="hidden">Tải ảnh ngay 💾</button>
+  <br>
+  <canvas id="finalCanvas" class="hidden"></canvas>
+  <script src="script.js"></script>
+</body>
+</html>
