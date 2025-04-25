@@ -3,15 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <title>PhotoBooth At Home</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"> <!-- Giao diện trang chụp ảnh -->
 </head>
 <body>
+  <!-- Tiêu đề trang -->
   <h1>😎 Chào mừng đến với Photobooth At Home 😎</h1>
-  
+
+  <!-- Vùng chứa video và điều khiển -->
   <div class="main-container">
     <div class="video-container">
+      <!-- Video webcam -->
       <video id="video" autoplay></video>
+
+      <!-- Overlay hiển thị đếm ngược -->
       <div id="countdownOverlay" class="hidden"></div>
+
+      <!-- Chọn thời gian đếm ngược -->
       <div class="controls">
         <label for="countdown">Chọn thời gian đếm ngược:</label>
         <select id="countdown">
@@ -20,9 +27,12 @@
           <option value="10">10 giây</option>
         </select>
       </div>  
-      <button id="captureBtn">Bắt đầu chụp ảnh 📸</button>
+
+      <!-- Nút bắt đầu chụp ảnh -->
+      <button id="capture">Bắt đầu chụp ảnh 📸</button>
     </div>
 
+    <!-- Vùng hiển thị ảnh preview sau khi chụp -->
     <div class="preview-column">
       <canvas class="photo-preview hidden" id="preview1"></canvas>
       <canvas class="photo-preview hidden" id="preview2"></canvas>
@@ -30,11 +40,7 @@
     </div>
   </div>
 
-  <button id="brightness" class="hidden">Làm sáng 🌞</button>
-  <button id="grayscale" class="hidden">Trắng đen 🎞️</button>
-  <button id="downloadBtn" class="hidden">Tải ảnh ngay 💾</button>
-  <br>
-  <canvas id="finalCanvas" class="hidden"></canvas>
+  <!-- Nhúng script xử lý chức năng chụp -->
   <script src="script.js"></script>
 </body>
 </html>
