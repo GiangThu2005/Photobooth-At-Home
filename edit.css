@@ -78,6 +78,7 @@ select {
   font-size: 1rem;
   border-radius: 6px;
   border: 1px solid #ccc;
+  text-align: center;
 }
 
 .frame-buttons,
