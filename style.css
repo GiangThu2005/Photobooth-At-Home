@@ -1,38 +1,39 @@
 body {
-  font-family: Arial, sans-serif;       /* Kiểu chữ chung */
-  text-align: center;                   /* Căn giữa nội dung */
-  background: #fbeffe;                  /* Nền tím nhạt */
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #fbeffe;
   margin: 0;
   padding: 20px;
 }
 
 h1 {
-  margin-bottom: 20px;                  /* Khoảng cách dưới tiêu đề */
+  font-family: Cascadia Code, monospace;
+  margin-bottom: 20px;
 }
 
 .main-container {
-  display: flex;                        /* Hiển thị ngang: webcam + preview */
+  display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 30px;                            /* Khoảng cách giữa các khối */
+  gap: 30px;
 }
 
 .video-container {
   display: flex;
-  flex-direction: column;              /* Hiển thị theo chiều dọc */
+  flex-direction: column;
   align-items: center;
-  position: relative;                  /* Để overlay countdown nằm đè lên */
+  position: relative;
 }
 
 video, canvas {
   margin: 10px auto;
   max-width: 100%;
-  border: 4px solid #2d2a2a;           /* Viền đen */
-  border-radius: 10px;                 /* Bo góc */
+  border: 4px solid #2d2a2a;
+  border-radius: 10px;
 }
 
 video {
-  transform: scaleX(-1);               /* Lật ngang video (giống gương) */
+  transform: scaleX(-1);  /* Lật ngang video */
 }
 
 button {
@@ -42,20 +43,20 @@ button {
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  background-color: #7e62b3;           /* Tím */
+  background-color: #7e62b3;
   color: white;
 }
 
 button:hover {
-  background-color: #654b96;           /* Hover: tím đậm hơn */
+  background-color: #654b96;
 }
 
 .hidden {
-  display: none;                        /* Dùng để ẩn canvas, overlay, ... */
+  display: none;
 }
 
 .controls {
-  margin: 1px 0;
+  margin: 5px 0;
 }
 
 select {
@@ -67,19 +68,19 @@ select {
 
 #countdownOverlay {
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);     /* Căn giữa */
+  transform: translate(-50%, -50%);
   font-size: 64px;
   font-weight: bold;
   color: white;
-  text-shadow: 2px 2px 10px black;      /* Đổ bóng chữ */
-  z-index: 10;                          /* Đè lên video */
+  text-shadow: 2px 2px 10px black;
+  z-index: 10;
 }
 
 .preview-column {
   display: flex;
-  flex-direction: column;              /* Hiển thị dọc 3 ảnh */
+  flex-direction: column;
   gap: 15px;
   margin-top: 10px;
 }
@@ -89,5 +90,4 @@ select {
   height: 108px;
   border: 3px solid #999;
   border-radius: 8px;
-  background: white;                   /* Nền trắng */
 }
