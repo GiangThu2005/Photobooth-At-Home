@@ -1,8 +1,8 @@
-// 📸 Lấy canvas và context để vẽ
+// Lấy canvas và context để vẽ
 const canvas = document.getElementById("editCanvas");
 const ctx = canvas.getContext("2d");
 
-// 🎨 Các biến quản lý giao diện
+// Các biến quản lý giao diện
 let currentFrame = new Image();             // Khung nền (có thể thay đổi)
 let currentStickers = [];                   // Sticker đang dán
 let backgroundColor = "white";              // Màu nền mặc định
@@ -12,7 +12,7 @@ const photoPositions = [121, 616, 1116];     // Vị trí 3 ảnh trên canvas
 let photoCanvases = [];                      // Canvas con cho từng ảnh
 let photoStates = [];                        // Lưu trạng thái gốc của ảnh
 
-// 🚀 Khởi tạo canvas từng ảnh
+// Khởi tạo canvas từng ảnh
 function initPhotoCanvases(callback) {
   photoCanvases = [];
   photoStates = [];
@@ -37,13 +37,13 @@ function initPhotoCanvases(callback) {
   }
 }
 
-// ✏️ Vẽ toàn bộ canvas
+// Vẽ toàn bộ canvas
 function drawAll() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = backgroundColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Vẽ frame nền nếu có
+  // Vẽ frame nền (nếu có)
   if (currentFrame.complete && currentFrame.src) {
     ctx.drawImage(currentFrame, 0, 0, 700, 2000);
   }
@@ -61,20 +61,20 @@ function drawAll() {
   });
 }
 
-// 🎨 Đổi màu nền
+// Đổi màu nền
 function changeBackground(color) {
   backgroundColor = color;
   currentFrame.src = "";
   drawAll();
 }
 
-// 🎨 Đổi frame nền
+// Đổi frame nền
 function changeFrame(src) {
   currentFrame.src = src;
   currentFrame.onload = drawAll;
 }
 
-// 🖼️ Thêm sticker
+// Thêm sticker
 function addSticker(src) {
   const img = new Image();
   img.onload = () => {
@@ -84,7 +84,7 @@ function addSticker(src) {
   img.src = src;
 }
 
-// 🔄 Reset filter về ảnh gốc cho ảnh đang chọn
+// Reset filter về ảnh gốc cho ảnh đang chọn
 function resetFilterOfSelected() {
   const selectedIndex = parseInt(document.getElementById("photoSelect").value);
   const ctxPhoto = photoCanvases[selectedIndex].getContext("2d");
@@ -92,7 +92,7 @@ function resetFilterOfSelected() {
   drawAll();
 }
 
-// 🎞️ Filter trắng đen
+// Filter trắng đen
 function applyGrayscaleToSelected() {
   const selectedIndex = parseInt(document.getElementById("photoSelect").value);
   resetFilterOfSelected();
@@ -109,7 +109,7 @@ function applyGrayscaleToSelected() {
   drawAll();
 }
 
-// 💡 Filter tăng sáng
+// Filter tăng sáng
 function adjustBrightnessToSelected(value) {
   const selectedIndex = parseInt(document.getElementById("photoSelect").value);
   resetFilterOfSelected();
@@ -125,7 +125,7 @@ function adjustBrightnessToSelected(value) {
   drawAll();
 }
 
-// 🌑 Filter làm tối
+// Filter làm tối
 function applyDarkenToSelected() {
   const selectedIndex = parseInt(document.getElementById("photoSelect").value);
   resetFilterOfSelected();
@@ -141,7 +141,7 @@ function applyDarkenToSelected() {
   drawAll();
 }
 
-// ❄️ Filter tông lạnh
+// Filter tông lạnh
 function applyCoolToneToSelected() {
   const selectedIndex = parseInt(document.getElementById("photoSelect").value);
   resetFilterOfSelected();
@@ -156,7 +156,7 @@ function applyCoolToneToSelected() {
   drawAll();
 }
 
-// 🔥 Filter tông ấm
+// Filter tông ấm
 function applyWarmToneToSelected() {
   const selectedIndex = parseInt(document.getElementById("photoSelect").value);
   resetFilterOfSelected();
@@ -171,16 +171,15 @@ function applyWarmToneToSelected() {
   drawAll();
 }
 
-// 🧹 Reset toàn bộ canvas về ban đầu
+// Reset toàn bộ canvas về ban đầu
 function resetCanvas() {
-  captured = [...originalImages];
   currentFrame.src = "";
   currentStickers = [];
   backgroundColor = "white";
   initPhotoCanvases(drawAll);
 }
 
-// 💾 Tải canvas về dưới dạng ảnh PNG
+// Tải canvas về dưới dạng ảnh PNG
 function downloadImage() {
   const link = document.createElement("a");
   link.download = "edited_photobooth.png";
@@ -188,7 +187,5 @@ function downloadImage() {
   link.click();
 }
 
-// 🚀 Khi trang tải xong, khởi tạo canvas
-window.onload = () => {
-  initPhotoCanvases(drawAll);
-};
+initPhotoCanvases(drawAll);
+
