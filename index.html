@@ -16,7 +16,7 @@
   <div class="main-container">
     <div class="video-container">
       <!-- Video webcam -->
-      <video id="video" autoplay></video>
+      <video id="video" autoplay playsinline></video>
 
       <!-- Overlay hiển thị đếm ngược -->
       <div id="countdownOverlay" class="hidden"></div>
@@ -35,13 +35,11 @@
       <button id="capture">Bắt đầu chụp ảnh 📸</button>
     </div>
 
-    <canvas id="editCanvas" width="700" height="2000" class="hidden"></canvas>
-
     <!-- Vùng hiển thị ảnh preview sau khi chụp -->
     <div class="preview-column">
-      <canvas class="photo-preview hidden" id="preview1" width="577" height="434"></canvas>
-      <canvas class="photo-preview hidden" id="preview2" width="577" height="434"></canvas>
-      <canvas class="photo-preview hidden" id="preview3" width="577" height="434"></canvas>
+      <canvas id="preview1" width="577" height="434" class="photo-preview hidden"></canvas>
+      <canvas id="preview2" width="577" height="434" class="photo-preview hidden"></canvas>
+      <canvas id="preview3" width="577" height="434" class="photo-preview hidden"></canvas>
 
     </div>
   </div>
