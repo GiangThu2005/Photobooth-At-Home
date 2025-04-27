@@ -182,7 +182,7 @@ function resetCanvas() {
 // Tải canvas về dưới dạng ảnh PNG
 function downloadImage() {
   const link = document.createElement("a");
-  link.download = "edited_photobooth.png";
+  link.download = "photobooth_at_home.png";
   link.href = canvas.toDataURL();
   link.click();
 }
