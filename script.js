@@ -21,14 +21,12 @@ function startAutoCapture() {
   const count = parseInt(countdownSelect.value); // lấy thời gian đếm ngược từ dropdown
 
   function countdownAndCapture() {
-    // Nếu đã chụp đủ 3 ảnh thì không làm gì nữa
     if (capturedImages.length >= 3) return;
 
     let currentCount = count;
     countdownOverlay.classList.remove("hidden");
     countdownOverlay.textContent = currentCount;
 
-    // Mỗi 1 giây giảm số đếm
     const interval = setInterval(() => {
       currentCount--;
 
@@ -36,48 +34,74 @@ function startAutoCapture() {
         countdownOverlay.textContent = currentCount;
       }
 
-      // Khi countdown = 0 thì chụp ảnh
       if (currentCount === 0) {
         clearInterval(interval);
 
         setTimeout(() => {
           countdownOverlay.classList.add("hidden");
 
-          // Tạo canvas tạm để lưu ảnh chụp
+          // Lấy kích thước gốc của video
+          const videoWidth = video.videoWidth;
+          const videoHeight = video.videoHeight;
+
+          // Tạo canvas tạm cùng tỷ lệ video
           const tempCanvas = document.createElement('canvas');
-          tempCanvas.width = 577;
-          tempCanvas.height = 434;
+          tempCanvas.width = videoWidth;
+          tempCanvas.height = videoHeight;
           const tempCtx = tempCanvas.getContext('2d');
 
-          // Lật ảnh ngang để giống gương
-          tempCtx.translate(tempCanvas.width, 0);
+          // Lật ngang
+          tempCtx.translate(videoWidth, 0);
           tempCtx.scale(-1, 1);
-          tempCtx.drawImage(video, 0, 0, 577, 434);
 
-          // Lưu canvas vào mảng
-          capturedImages.push(tempCanvas);
+          tempCtx.drawImage(video, 0, 0, videoWidth, videoHeight);
 
-          // Hiển thị preview ảnh tương ứng
+          // 🖼️ Tiếp theo: Resize canvas về tỷ lệ 4:3 chuẩn 577x434
+          const finalCanvas = document.createElement('canvas');
+          finalCanvas.width = 577;
+          finalCanvas.height = 434;
+          const finalCtx = finalCanvas.getContext('2d');
+
+          // Tính tỉ lệ scale
+          const scale = Math.min(videoWidth / 577, videoHeight / 434);
+
+          // Cắt vùng giữa video cho đẹp
+          const cropWidth = 577 * scale;
+          const cropHeight = 434 * scale;
+          const cropX = (videoWidth - cropWidth) / 2;
+          const cropY = (videoHeight - cropHeight) / 2;
+
+          // Vẽ phần crop lên final canvas
+          finalCtx.drawImage(
+            tempCanvas,
+            cropX, cropY, cropWidth, cropHeight,
+            0, 0, 577, 434
+          );
+
+          // Lưu final canvas vào mảng
+          capturedImages.push(finalCanvas);
+
+          // Hiển thị preview
           const previewCanvas = document.getElementById(`preview${capturedImages.length}`);
           if (previewCanvas) {
             previewCanvas.classList.remove("hidden");
             const ctx = previewCanvas.getContext('2d');
             ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
-            ctx.drawImage(tempCanvas, 0, 0, previewCanvas.width, previewCanvas.height);
+            ctx.drawImage(finalCanvas, 0, 0, previewCanvas.width, previewCanvas.height);
           }
 
-          // Tiếp tục chụp nếu chưa đủ 3 ảnh
+          // Nếu chưa đủ 3 ảnh, tiếp tục
           if (capturedImages.length < 3) {
             countdownAndCapture();
           } else {
-            // Khi đủ 3 ảnh -> chuyển sang trang edit + lưu ảnh vào localStorage
+            // Đủ 3 ảnh -> lưu và chuyển trang
             const imageData = capturedImages.map(canvas => canvas.toDataURL());
             localStorage.setItem("capturedPhotos", JSON.stringify(imageData));
             window.location.href = "edit.html";
           }
-        }, 500); // delay 0.5s để hiện số 0 trước khi ẩn
+        }, 500);
       }
-    }, 1000); // mỗi giây 1 lần
+    }, 1000);
   }
 
   countdownAndCapture();
