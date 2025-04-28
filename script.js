@@ -16,9 +16,9 @@ navigator.mediaDevices.getUserMedia({ video: true })
     console.error("Không thể truy cập webcam:", err);
   });
 
-// Bắt đầu chụp ảnh tự động sau khi nhấn nút
+// Khi bấm capture
 function startAutoCapture() {
-  const count = parseInt(countdownSelect.value); // lấy thời gian đếm ngược từ dropdown
+  const count = parseInt(countdownSelect.value);
 
   function countdownAndCapture() {
     if (capturedImages.length >= 3) return;
@@ -40,48 +40,48 @@ function startAutoCapture() {
         setTimeout(() => {
           countdownOverlay.classList.add("hidden");
 
-          // Lấy kích thước gốc của video
           const videoWidth = video.videoWidth;
           const videoHeight = video.videoHeight;
 
-          // Tạo canvas tạm cùng tỷ lệ video
-          const tempCanvas = document.createElement('canvas');
-          tempCanvas.width = videoWidth;
-          tempCanvas.height = videoHeight;
-          const tempCtx = tempCanvas.getContext('2d');
-
-          // Lật ngang
-          tempCtx.translate(videoWidth, 0);
-          tempCtx.scale(-1, 1);
-
-          tempCtx.drawImage(video, 0, 0, videoWidth, videoHeight);
-
-          // 🖼️ Tiếp theo: Resize canvas về tỷ lệ 4:3 chuẩn 577x434
+          // Final canvas chuẩn 4:3
           const finalCanvas = document.createElement('canvas');
           finalCanvas.width = 577;
           finalCanvas.height = 434;
           const finalCtx = finalCanvas.getContext('2d');
 
-          // Tính tỉ lệ scale
-          const scale = Math.min(videoWidth / 577, videoHeight / 434);
+          // Tính vùng crop để lấy đúng 4:3
+          let cropWidth, cropHeight, cropX, cropY;
+          const targetRatio = 4 / 3;
 
-          // Cắt vùng giữa video cho đẹp
-          const cropWidth = 577 * scale;
-          const cropHeight = 434 * scale;
-          const cropX = (videoWidth - cropWidth) / 2;
-          const cropY = (videoHeight - cropHeight) / 2;
+          const videoRatio = videoWidth / videoHeight;
 
-          // Vẽ phần crop lên final canvas
+          if (videoRatio > targetRatio) {
+            // Video rộng hơn 4:3 ➔ crop chiều ngang
+            cropHeight = videoHeight;
+            cropWidth = videoHeight * targetRatio;
+            cropX = (videoWidth - cropWidth) / 2;
+            cropY = 0;
+          } else {
+            // Video hẹp hơn 4:3 ➔ crop chiều dọc
+            cropWidth = videoWidth;
+            cropHeight = videoWidth / targetRatio;
+            cropX = 0;
+            cropY = (videoHeight - cropHeight) / 2;
+          }
+
+          // Vẽ đúng vùng crop lên canvas 4:3
+          finalCtx.translate(finalCanvas.width, 0); // Lật ngang như gương
+          finalCtx.scale(-1, 1);
           finalCtx.drawImage(
-            tempCanvas,
+            video,
             cropX, cropY, cropWidth, cropHeight,
-            0, 0, 577, 434
+            0, 0, finalCanvas.width, finalCanvas.height
           );
 
           // Lưu final canvas vào mảng
           capturedImages.push(finalCanvas);
 
-          // Hiển thị preview
+          // Preview
           const previewCanvas = document.getElementById(`preview${capturedImages.length}`);
           if (previewCanvas) {
             previewCanvas.classList.remove("hidden");
@@ -90,11 +90,9 @@ function startAutoCapture() {
             ctx.drawImage(finalCanvas, 0, 0, previewCanvas.width, previewCanvas.height);
           }
 
-          // Nếu chưa đủ 3 ảnh, tiếp tục
           if (capturedImages.length < 3) {
             countdownAndCapture();
           } else {
-            // Đủ 3 ảnh -> lưu và chuyển trang
             const imageData = capturedImages.map(canvas => canvas.toDataURL());
             localStorage.setItem("capturedPhotos", JSON.stringify(imageData));
             window.location.href = "edit.html";
@@ -103,7 +101,6 @@ function startAutoCapture() {
       }
     }, 1000);
   }
-
   countdownAndCapture();
 }
 
